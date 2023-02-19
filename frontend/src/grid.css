@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* background: white; */
+}
+
+#root {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+    helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+  color: #474747;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+.default {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+}
+
+.details {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #ffffffa0;
+  color: white;
+  padding: 40px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.details h1 {
+  color: #240313;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  max-width: 250px;
+}
+
+.details p {
+  color: thistle;
+  font-size: 26px;
+  line-height: 26px;
+  margin: 0;
+  padding-top: 15px;
+}
+
+.circle {
+  z-index: 2;
+  position: absolute;
+  top: calc(50% - 140px);
+  left: calc(50% - 140px);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  box-shadow: 0px 20px 60px -10px rgba(0, 0, 0, 0.2);
+}
+.showCard {
+  top: 35%;
+  z-index: 1;
+  position: absolute;
+  /* top: calc(50% - 140px);
+  left: calc(50% - 140px);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%; */
+}
+
+.cardDiv {
+  position: absolute;
+  background-color: aqua;
+  border: 1px solid black;
+  top: 40%;
+  left: 50%;
+  /* width: 10px;
+  height: 10px; */
+}
+.heroImage {
+  background: url(../public/background.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
