@@ -31,7 +31,7 @@ const ProductsGrid = ({
       {user && pathname === `/${user.username}` ? (
         <div
           onClick={handelPopOpen}
-          className=" flex justify-center items-center relative bg-slate-200   h-full rounded-t-md  w-full hover:cursor-pointer border"
+          className=" flex justify-center items-center relative bg-slate-200 w-40 h-[24.5rem] rounded-t-md  w-full hover:cursor-pointer border"
         >
           <motion.div
             className="box"

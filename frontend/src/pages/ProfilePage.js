@@ -100,7 +100,7 @@ const ProfilePage = () => {
               </div>
 
               <div
-                className={`${styles["panel-column"]} flex flex-wrap justify-center w-4/5 items-center  bg-white border mt-5 mt-md-0 ms-md-5 p-5`}
+                className={`${styles["panel-column"]} flex flex-wrap justify-center items-center  bg-white border mt-5 mt-md-0 ms-md-5 p-5`}
               >
                 {toggle === "information" && <UserInformation user={user} />}
                 {toggle === "password" && <UserChangePassword />}
