@@ -44,7 +44,52 @@ function MainHeader() {
       </div>
     </div>
   );
-  const notif = <div>@</div>;
+  const onHover = () => {
+    console.log("notif was hovered");
+  };
+  const NotifCenter = () => {
+    if (user && user.notif) {
+      const unseeeNotif = user.notif.filter(
+        (element) => element.seen === false
+      );
+      if (unseeeNotif.length > 0) {
+        const notif = unseeeNotif.map((element) => (
+          <div key={element._id}>
+            your product{" "}
+            <i className="text-amber-500">{element.notifProduct.title}</i> was
+            liked by someone
+          </div>
+        ));
+        return (
+          <Popover
+            content={notif}
+            placement="bottomRight"
+            title="Notification "
+          >
+            <Badge dot>
+              <BellFilled style={{ fontSize: "24px" }} />
+            </Badge>
+          </Popover>
+        );
+      } else {
+        const notif = <div>you dont have any notification</div>;
+        return (
+          <Popover
+            content={notif}
+            placement="bottomRight"
+            title="Notification "
+          >
+            <Badge>
+              <BellFilled style={{ fontSize: "24px" }} />
+            </Badge>
+          </Popover>
+        );
+      }
+    } else {
+      return;
+    }
+  };
+
   const profile = (
     <ul className="menu menu-compact bg-base-100 w-52">
       <li>
@@ -96,8 +141,16 @@ function MainHeader() {
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <Popover content={busket} title="Busket Content">
-                <Badge size="default" count={state.length}>
+              <Popover
+                content={busket}
+                placement="bottomRight"
+                title="Busket Content"
+              >
+                <Badge
+                  size="default"
+                  placement="bottomRight"
+                  count={state.length}
+                >
                   <ShoppingCartOutlined style={{ fontSize: "24px" }} />
                 </Badge>
               </Popover>
@@ -108,11 +161,7 @@ function MainHeader() {
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <Popover content={notif} title="Notification ">
-                <Badge dot>
-                  <BellFilled style={{ fontSize: "24px" }} />
-                </Badge>
-              </Popover>
+              {NotifCenter()}
             </motion.div>
             <motion.div
               className="box"

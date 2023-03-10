@@ -6,9 +6,7 @@ body {
   min-height: 100vh;
   background-color: #fcfcfc;
 }
-.container {
-  width: 83%;
-}
+
 .panel {
   /* width: 85%; */
   z-index: 2;

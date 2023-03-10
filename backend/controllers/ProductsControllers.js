@@ -123,8 +123,14 @@ const updateProduct = async (req, res) => {
       product.title = update.title;
     }
 
-    if (update.img) {
-      product.img = update.img;
+    if (update.file) {
+      product.key = update.file;
+    }
+    if (update.categories) {
+      product.categories = update.categories;
+    }
+    if (update.description) {
+      product.description = update.description;
     }
 
     await product.save();

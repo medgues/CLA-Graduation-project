@@ -36,7 +36,7 @@ export const useFetch = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log("fetch res", res);
+        console.log("get profile fetch res", res);
         return res;
       } catch (err) {
         const res = err;

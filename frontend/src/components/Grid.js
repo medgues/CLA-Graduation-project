@@ -9,13 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AppstoreAddOutlined } from "@ant-design/icons";
 import { PopupContext } from "../contexts/PopupContext";
 
-const ProductsGrid = ({
-  data,
-  handelPopUpOpen,
-  disactivateToggleIsTrue,
-  handelEditFormPopUpOpen,
-  handelCardModalOpen,
-}) => {
+const ProductsGrid = ({ data }) => {
   const { user } = useContext(Auth);
   const { pathname } = useLocation();
   const { addProductForm } = PopUpModals();
@@ -27,7 +21,7 @@ const ProductsGrid = ({
   };
 
   return (
-    <div className="grid max-w-7xl gap-4 mt-2">
+    <div className="grid max-w-7xl gap-4 m-4">
       {user && pathname === `/${user.username}` ? (
         <div
           onClick={handelPopOpen}
@@ -50,21 +44,11 @@ const ProductsGrid = ({
               duration: 0.5,
               type: "ease",
               ease: "easeInOut",
-              // stiffness: 350,
-              // damping: 25,
             }}
             key={product._id}
           >
             <div key={product._id}>
-              <Product
-                disactivateToggleIsTrue={disactivateToggleIsTrue}
-                handelPopUpOpen={handelPopUpOpen}
-                handelEditFormPopUpOpen={handelEditFormPopUpOpen}
-                handelCardModalOpen={handelCardModalOpen}
-                data={product}
-                // price={product.amount}
-                // rating={product.rating}
-              />
+              <Product data={product} />
             </div>
           </motion.div>
         ))}

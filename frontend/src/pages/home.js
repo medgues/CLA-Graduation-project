@@ -14,15 +14,12 @@ import PopUp from "../components/PopUp";
 
 const Home = () => {
   const { modalComponent } = useContext(PopupContext);
-
-  const [showCardModal, setShowCardModal] = useState(false);
-  const [product, setProduct] = useState(false);
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("");
 
   const { fetchData } = useProducts();
   const { user } = useContext(Auth);
-  const { products } = useContext(ProductsContext); //is undefined on the second render
+  const { products } = useContext(ProductsContext);
   useEffect(() => {
     setData(products);
   }, [products]);
@@ -53,16 +50,7 @@ const Home = () => {
       );
     }
   };
-  const handelCardModalOpen = ({ data }) => {
-    console.log("card model data", data);
-    console.log("cardmodel opened opened");
-    setProduct({ ...data });
-    setShowCardModal(true);
-  };
-  const handelCardModalClose = () => {
-    console.log("cardmodel opened opened");
-    setShowCardModal(false);
-  };
+
   return (
     <div>
       <MainHeader />
@@ -72,7 +60,7 @@ const Home = () => {
         newest={newest}
         filterByCategory={filterByCategory}
       />
-      <ProductsGrid data={data} handelCardModalOpen={handelCardModalOpen} />
+      <ProductsGrid data={data} />
       <PopUp component={modalComponent} />
     </div>
   );

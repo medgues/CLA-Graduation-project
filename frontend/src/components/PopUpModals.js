@@ -8,11 +8,34 @@ import bg from "../../src/assets/shirt.svg";
 import ProductPage from "./productPage/pages/ProductPage";
 import AddProductForm from "./AddProductForm";
 import { motion } from "framer-motion";
+import { useFetch } from "../hooks/useFetch";
+import axios from "axios";
+import useProducts from "../hooks/useProducts";
 
 const PopUpModals = () => {
   const { MyTextInput, MyCheckbox, MySelect, ImageUploaderField } = UseFormik();
   const { setShowModal } = useContext(PopupContext);
   const categories = ["sci-fi", "anime", "movies", "animals"];
+  const { fetch } = useFetch();
+  const { fetchData } = useProducts();
+  const handelImage = async (values) => {
+    console.log("values", values);
+    console.log("img", values.file);
+    console.log("title", values.title);
+    const newTitle = values.title.replaceAll(" ", "").toLowerCase();
+    const { data } = await axios.get(`api/preUrl/${newTitle}.png`);
+    console.log(data);
+    const { put, get, key } = data.UpUrl;
+    await axios.put(put, values.file);
+    return key;
+  };
+  const reFetchProducts = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const url = `/api/products/${user.username}`;
+    const method = "getProfile";
+    console.log("refetch function", url, method, user);
+    fetchData({ url, method, user, data: {} });
+  };
 
   const deletePop = ({ product, handelDeletDesign }) => {
     const { data } = product;
@@ -130,15 +153,30 @@ const PopUpModals = () => {
                       description: Yup.string()
                         .min(20, "Must be 20 characters or more")
                         .required("Required"),
+                      // categories: Yup.string().oneOf(categories).required("Required"),
                       acceptedTerms: Yup.boolean()
                         .required("Required")
                         .oneOf([true], "You must accept the conditions."),
                     })}
                     onSubmit={async (values, { setSubmitting }) => {
-                      const user = { ...values };
                       console.log("values", values);
-
-                      // await signup(user);
+                      let key;
+                      if (values.file) {
+                        key = await handelImage(values);
+                      } else {
+                        key = null;
+                      }
+                      console.log("key", key);
+                      const user = JSON.parse(localStorage.getItem("user"));
+                      const product = {
+                        ...values,
+                        file: key,
+                        postedBy: user.username,
+                      };
+                      const url = `/api/products/${data._id}`;
+                      fetch({ url, data: product, method: "patch", user });
+                      reFetchProducts();
+                      setShowModal(false);
                       setSubmitting(false);
                     }}
                   >

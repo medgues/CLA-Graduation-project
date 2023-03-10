@@ -22,6 +22,7 @@ const login = async (req, res) => {
       role: user.role,
       email: user.email,
       fav: user.fav,
+      notif: user.notif,
       token,
     });
   } catch (err) {
@@ -48,6 +49,7 @@ const signup = async (req, res) => {
       role: user.role,
       email: user.email,
       fav: user.fav,
+      notif: user.notif,
       token,
     });
   } catch (err) {

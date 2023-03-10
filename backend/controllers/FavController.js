@@ -5,8 +5,6 @@ const UserModel = require("../models/UserModel");
 const AddProductToFav = async (req, res) => {
   const userId = req.user._id;
   const { productId } = req.body;
-  console.log("user", userId);
-  console.log("productId", productId);
   try {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       console.log("productId is not valid objectID");
@@ -35,9 +33,20 @@ const AddProductToFav = async (req, res) => {
 
       await product.save();
       const user = await UserModel.findById(userId);
+      console.log(user);
       user.fav = [...user.fav, productId];
 
       await user.save();
+
+      const userToNotify = await UserModel.findOne({
+        username: product.postedBy,
+      });
+      console.log("user", userToNotify);
+      userToNotify.notif = [
+        ...userToNotify.notif,
+        { notifProduct: productId, seen: false },
+      ];
+      await userToNotify.save();
 
       const products = await ProductsModel.find({}).populate(
         "likedBy",

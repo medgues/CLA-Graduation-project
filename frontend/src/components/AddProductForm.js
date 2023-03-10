@@ -6,6 +6,7 @@ import { useFetch } from "../hooks/useFetch";
 import UseFormik from "../hooks/UseFormik";
 import { PopupContext } from "../contexts/PopupContext";
 import { motion } from "framer-motion";
+import useProducts from "../hooks/useProducts";
 
 const AddProductForm = () => {
   const { MyTextInput, MySelect, ImageUploaderField } = UseFormik();
@@ -14,6 +15,15 @@ const AddProductForm = () => {
   const [err, setErr] = useState("");
   const { fetch } = useFetch();
   const categories = ["sci-fi", "anime", "movies", "animals"];
+  const { fetchData } = useProducts();
+
+  const reFetchProducts = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const url = `/api/products/${user.username}`;
+    const method = "getProfile";
+    console.log("refetch function", url, method, user);
+    fetchData({ url, method, user, data: {} });
+  };
   const handelImage = async (values) => {
     console.log("img", values.file);
     console.log("title", values.title);
@@ -30,6 +40,7 @@ const AddProductForm = () => {
     console.log("product", product);
     const url = "/api/products/";
     fetch({ url, data: product, method: "post", user });
+    reFetchProducts();
     setShowModal(false);
   };
 

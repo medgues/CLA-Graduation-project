@@ -23,13 +23,7 @@ const Info = ({ product }) => {
       <p className="text">{product.description}</p>
     </div>
   );
-  const KindTaps = (
-    <div className="tabs pt-1">
-      <a className="tab tab-sm tab-lifted tab-active">t-shirt</a>
-      <a className="tab tab-sm tab-lifted ">long sleevs</a>
-      <a className="tab tab-sm tab-lifted">hoddie</a>
-    </div>
-  );
+
   const ColorContainer = (
     <div className="color-container">
       <h3 className="title">Color</h3>
@@ -69,8 +63,6 @@ const Info = ({ product }) => {
     const selectedColor = document
       .getElementsByClassName("color active")[0]
       .getAttribute("id");
-    // console.log("size", size);
-    // console.log("color", selectedColor);
     setShowModal(false);
     dispatch({
       type: "ADD_TO_CARD",
@@ -97,7 +89,7 @@ const Info = ({ product }) => {
     <div className="info">
       {shoeName}
       {description}
-      {KindTaps}
+
       {ColorContainer}
       {SizeContainer}
       {BuySection}

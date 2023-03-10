@@ -35,7 +35,19 @@ const UserSchema = new Schema(
       type: [mongoose.Schema.Types.ObjectId],
       required: false,
     },
+
+    notif: [
+      {
+        notifProduct: {
+          ref: "ProductShcema",
+          type: mongoose.Schema.Types.ObjectId,
+          required: false,
+        },
+        seen: false,
+      },
+    ],
   },
+
   { timestamps: true }
 );
 
@@ -85,7 +97,12 @@ UserSchema.statics.login = async function (email, password) {
     throw Error("email must be valid");
   }
 
-  const user = await this.findOne({ email }).populate("fav");
+  const user = await this.findOne({ email })
+    .populate({
+      path: "notif.notifProduct",
+    })
+    .populate("fav");
+  console.log("user", user);
   if (!user) {
     throw Error("Incorrect Credentials");
   }

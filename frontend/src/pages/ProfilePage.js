@@ -5,7 +5,6 @@ import useProducts from "../hooks/useProducts";
 import MainHeader from "../components/MainHeader";
 import ProductsGrid from "../components/Grid";
 import PopUp from "../components/PopUp";
-import { PopupContext } from "../contexts/PopupContext";
 
 import UserChangePassword from "../components/Panel/UserChangePassword/UserChangePassword";
 import UserInformation from "../components/Panel/UserInformation/UserInformation";
@@ -19,27 +18,21 @@ import {
 
 const ProfilePage = () => {
   const [data, setData] = useState([]);
-  console.log("datatata", data);
   const [toggle, setToggel] = useState("profile");
-  const { setShowModal } = useContext(PopupContext);
 
-  const [showEditFormModal, setshowEditFormModal] = useState(false);
-  const [product, setProduct] = useState({});
   const { username } = useParams();
 
   const { products } = useContext(ProductsContext);
 
   const { fetchData } = useProducts();
-  // const { user } = useContext(Auth);
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     setData(products);
   }, [products]);
-  const disactivateToggleIsTrue = user.username === username;
   useEffect(() => {
     const url = `/api/products/${username}`;
     const method = "getProfile";
-    console.log(url, method, user);
+    console.log("first fetch", url, method, user);
     fetchData({ url, method, user, data: {} });
   }, []);
   const sidebarLinks = [
@@ -65,18 +58,6 @@ const ProfilePage = () => {
       active: false,
     },
   ];
-  const handelPopUpOpen = ({ data }) => {
-    console.log("delet form", data);
-
-    setProduct({ ...data });
-    setShowModal(true);
-  };
-  const handelEditFormPopUpOpen = ({ data }) => {
-    console.log("edit form", data);
-    console.log("edit form popup opened");
-    setProduct({ ...data });
-    setshowEditFormModal(true);
-  };
 
   return (
     <div className=" min-h-screen  bg-slate-300">
@@ -104,14 +85,7 @@ const ProfilePage = () => {
               >
                 {toggle === "information" && <UserInformation user={user} />}
                 {toggle === "password" && <UserChangePassword />}
-                {toggle === "profile" && (
-                  <ProductsGrid
-                    data={data}
-                    handelPopUpOpen={handelPopUpOpen}
-                    disactivateToggleIsTrue={disactivateToggleIsTrue}
-                    handelEditFormPopUpOpen={handelEditFormPopUpOpen}
-                  />
-                )}
+                {toggle === "profile" && <ProductsGrid data={data} />}
               </div>
             </div>
           </div>

@@ -20,16 +20,7 @@ import {
 import axios from "axios";
 import { ProductsContext } from "../contexts/ProductsContext";
 
-const Product = ({
-  disactivateToggleIsTrue,
-  toggle,
-  handelPopUpOpen,
-  handelEditFormPopUpOpen,
-  handelCardModalOpen,
-  data,
-  key,
-  rating,
-}) => {
+const Product = ({ data }) => {
   const navigate = useNavigate();
   const { setModalComponent, setShowModal } = useContext(PopupContext);
   const { pathname } = useLocation();
@@ -38,8 +29,9 @@ const Product = ({
   const { fetchData } = useProducts();
   const { dispatch } = useContext(ProductsContext);
 
-  const liked =
-    data.likedBy.filter((e) => e.username === user.username).length > 0;
+  const liked = user
+    ? data.likedBy.filter((e) => e.username === user.username).length > 0
+    : false;
 
   const handelAddtofav = async () => {
     console.log("productId", data._id);
@@ -110,7 +102,7 @@ const Product = ({
       initial="exit"
       animate="visible"
       exit="exit"
-      className="relative hover:cursor-pointer border"
+      className="relative hover:cursor-pointer border min-w-full"
       style={{ background: data.css }}
     >
       {newest ? (
@@ -168,7 +160,11 @@ const Product = ({
         </div>
       </div>
       <div className="flex items-center w-full place-content-between px-1 pb-1">
-        <button onClick={handelAddtofav} className="flex items-center gap-1">
+        <button
+          onClick={handelAddtofav}
+          className="flex items-center gap-1"
+          disabled={user && user.username === data.postedBy ? true : false}
+        >
           {liked ? (
             <HeartFilled style={{ color: "#eb2f96" }} />
           ) : (
