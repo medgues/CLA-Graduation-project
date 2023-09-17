@@ -17,6 +17,7 @@ export const useFetch = () => {
       }
     }
     if (method === "get") {
+      console.log("url", url);
       console.log("user token", user);
       try {
         const res = await axios.get(url);

@@ -25,7 +25,7 @@ const Home = () => {
   }, [products]);
 
   useEffect(() => {
-    const url = "/api/products";
+    const url = " https://cla-graduation-project.onrender.com/api/products";
     const method = "get";
     fetchData({ url, method, user });
   }, []);
