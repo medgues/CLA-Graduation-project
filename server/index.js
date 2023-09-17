@@ -1,4 +1,5 @@
 require("dotenv").config();
+var cors = require("cors");
 const mongoose = require("mongoose");
 const express = require("express");
 const userRouter = require("./routes/Users");
@@ -7,6 +8,7 @@ const productsRouter = require("./routes/Products");
 const { createS3Bucket } = require("./services/presigned-url.service");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/api/user", userRouter);
